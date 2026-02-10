@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Demande, DemandeStatus } from './entities/demande.entity';
 import { Historique } from './entities/historique.entity';
+import { ChangeStatusDto } from './dto/change-status.dto';
 
 @Injectable()
 export class DemandesService {
@@ -24,15 +25,16 @@ export class DemandesService {
         details: 'Création de la demande',
       },],
     });
-    return await this.demandeRepository.save(demande);
+    await this.demandeRepository.save(demande);
+    return { message: 'Demande créée avec succès' };
   }
   
   async findAllLogs() {
-  return await this.historiqueRepository.find({
-    order: { dateAction: 'DESC' },
-    relations: ['demande'],
-  });
-}
+    return await this.historiqueRepository.find({
+      order: { dateAction: 'DESC' },
+      relations: ['demande'],
+    });
+  }
 
   async findAll(status?: DemandeStatus) {
     return await this.demandeRepository.find({
@@ -48,6 +50,11 @@ export class DemandesService {
     const demande = await this.demandeRepository.findOne({
       where: { id },
       relations: ['historiques'],
+      order: {
+          historiques: {
+            dateAction: 'DESC'
+          }
+    }
     });
     if (!demande) {
       throw new NotFoundException('Demande not found');
@@ -57,19 +64,33 @@ export class DemandesService {
 
   async update(id: string, updateDemandeDto: UpdateDemandeDto) {
     const demande = await this.findOne(id);
-
-    const ancienStatut = demande.statut;
-
+    
     Object.assign(demande, updateDemandeDto);
 
-    if (updateDemandeDto.statut && updateDemandeDto.statut !== ancienStatut) {
-      if (!demande.historiques) demande.historiques = [];
-      const NvLog = new Historique();
-      NvLog.typeAction = 'CHANGEMENT STATUT';
-      NvLog.details = `Changement de statut de ${ancienStatut} à ${updateDemandeDto.statut}`;
-      demande.historiques.push(NvLog);
-    }
-    return await this.demandeRepository.save(demande);
+    const log = new Historique();
+    log.typeAction = 'MODIFICATION';
+    log.details = `Mise à jour des informations (Titre/Description)`;
+    
+    demande.historiques.push(log);
+    await this.demandeRepository.save(demande);
+    return { message: 'Demande mise à jour avec succès' };
+  }
+
+  async updateStatus(id: string, statusDto: ChangeStatusDto) {
+    const demande = await this.findOne(id);
+    const ancienStatut = demande.statut;
+
+    if (ancienStatut === statusDto.statut) return { message: `Le statut est déjà ${statusDto.statut}`}; ;
+
+    demande.statut = statusDto.statut;
+
+    const log = new Historique();
+    log.typeAction = 'CHANGEMENT STATUT';
+    log.details = `Passage du statut ${ancienStatut} à ${statusDto.statut}`;
+
+    demande.historiques.push(log);
+    await this.demandeRepository.save(demande);
+    return { message: `Le statut est bien changé à ${statusDto.statut}`};
   }
 
   async remove(id: string) {
@@ -81,6 +102,7 @@ export class DemandesService {
       demande,
     });
 
-    return await this.demandeRepository.softDelete(id);
+    await this.demandeRepository.softDelete(id);
+    return { message: 'Demande supprimée avec succès' };
   }
 }
