@@ -4,6 +4,7 @@ import { DemandesService } from './demandes.service';
 import { CreateDemandeDto } from './dto/create-demande.dto';
 import { UpdateDemandeDto } from './dto/update-demande.dto';
 import { DemandeStatus } from './entities/demande.entity';
+import { ChangeStatusDto } from './dto/change-status.dto';
 
 @Controller('demandes')
 export class DemandesController {
@@ -30,8 +31,13 @@ export class DemandesController {
   }
 
   @Patch(':id')
-  update(@Param('id', ParseUUIDPipe) id: string, @Body() updateDemandeDto: UpdateDemandeDto) {
-    return this.demandesService.update(id, updateDemandeDto);
+  update(@Param('id') id: string, @Body() updateDto: UpdateDemandeDto) {
+    return this.demandesService.update(id, updateDto);
+  }
+
+  @Patch(':id/status')
+  updateStatus(@Param('id') id: string, @Body() statusDto: ChangeStatusDto) {
+    return this.demandesService.updateStatus(id, statusDto);
   }
 
   @Delete(':id')
