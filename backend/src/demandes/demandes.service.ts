@@ -114,11 +114,20 @@ export class DemandesService {
 
     await this.historiqueRepository.save({
       typeAction: 'SUPPRESSION',
-      details: 'Suppression de la demande',
+      details: `Suppression définitive du ticket : "${demande.titre}"`,
       demande,
     });
 
+<<<<<<< Updated upstream
     await this.demandeRepository.softDelete(id);
     return { message: 'Demande supprimée avec succès' };
+=======
+<<<<<<< Updated upstream
+    return await this.demandeRepository.softDelete(id);
+=======
+    await this.demandeRepository.softDelete(id);
+    return { message: `La demande "${demande.titre}" a été supprimée avec succès` };
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
   }
 }
