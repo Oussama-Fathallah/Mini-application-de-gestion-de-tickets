@@ -24,7 +24,7 @@ ngOnInit(): void {
 
   this.route.queryParams.subscribe(params => {
     if (params['success']) {
-      this.showNotification('Demande créée avec succès !');
+      this.showNotification('Demande modifiée avec succès !');
     }
   });
     this.demandeId = this.route.snapshot.paramMap.get('id');
