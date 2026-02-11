@@ -3,6 +3,7 @@ import { ListeDemandesComponent } from './components/liste-demandes/liste-demand
 import { AjoutDemandeComponent } from './components/ajout-demande/ajout-demande.component';
 import { DetailsDemandeComponent } from './components/details-demande/details-demande.component';
 import { JournalActiviteComponent } from './components/journal-activite/journal-activite.component';
+import { EditDemandeComponent } from './components/edit-demande/edit-demande.component';
 
 
 
@@ -11,5 +12,6 @@ export const routes: Routes = [
   { path: 'demandes', component: ListeDemandesComponent },
   { path: 'ajouter', component: AjoutDemandeComponent },
   { path: 'details/:id', component: DetailsDemandeComponent },
-  { path: 'journal', component: JournalActiviteComponent }
+  { path: 'journal', component: JournalActiviteComponent },
+  { path: 'edit/:id', component: EditDemandeComponent },
 ];
