@@ -22,8 +22,9 @@ export class DemandesService {
       ...createDemandeDto,
       historiques: [{
         typeAction: 'CRÉATION',
-        details: 'Création de la demande',
-      },],
+        details: `Création du ticket : "${createDemandeDto.titre}"`,
+        utilisateur: 'Admin'
+      }],
     });
     await this.demandeRepository.save(demande);
     return { message: 'Demande créée avec succès' };
@@ -62,18 +63,34 @@ export class DemandesService {
     return demande;
   }
 
-  async update(id: string, updateDemandeDto: UpdateDemandeDto) {
+  async update(id: string, updateDto: UpdateDemandeDto) {
     const demande = await this.findOne(id);
+    const changements = [];
     
-    Object.assign(demande, updateDemandeDto);
+    if (updateDto.titre && updateDto.titre !== demande.titre) {
+      changements.push(`Titre: "${demande.titre}" ➔ "${updateDto.titre}"`);
+    }
+    
+    if (updateDto.description && updateDto.description !== demande.description) {
+      changements.push(`Description: "${demande.description}" ➔ "${updateDto.description}"`);
+    }
+    Object.assign(demande, updateDto);
+    if (changements.length > 0) {
+      const log = new Historique();
+      log.typeAction = 'MODIFICATION';
+      log.details = `Mise à jour :\n${changements.join(' \n')}`;
+      log.utilisateur = 'Admin';
+      
+      if (!demande.historiques) demande.historiques = [];
+      demande.historiques.push(log);
+    }
 
-    const log = new Historique();
-    log.typeAction = 'MODIFICATION';
-    log.details = `Mise à jour des informations (Titre/Description)`;
+    const updated = await this.demandeRepository.save(demande);
     
-    demande.historiques.push(log);
-    await this.demandeRepository.save(demande);
-    return { message: 'Demande mise à jour avec succès' };
+    return {
+      message: 'Demande mise à jour avec succès',
+      data: updated
+    };
   }
 
   async updateStatus(id: string, statusDto: ChangeStatusDto) {
@@ -81,7 +98,6 @@ export class DemandesService {
     const ancienStatut = demande.statut;
 
     if (ancienStatut === statusDto.statut) return { message: `Le statut est déjà ${statusDto.statut}`}; ;
-
     demande.statut = statusDto.statut;
 
     const log = new Historique();
