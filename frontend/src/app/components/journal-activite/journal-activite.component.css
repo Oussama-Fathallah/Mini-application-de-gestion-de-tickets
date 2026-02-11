@@ -89,3 +89,12 @@ td:first-child {
   color: #64748b;
   white-space: nowrap;
 }
+.btn-back{
+  background-color: transparent;
+  color: black;
+  border: none;
+  font-family: fantasy;
+  font-size: x-large;
+  cursor: pointer;
+  transition: all 0.2s;
+}

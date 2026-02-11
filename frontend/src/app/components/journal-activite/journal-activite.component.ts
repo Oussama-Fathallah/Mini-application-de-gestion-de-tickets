@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { DemandeService } from '../../services/demande.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-journal-activite',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './journal-activite.component.html',
   styleUrl: './journal-activite.component.css'
 })

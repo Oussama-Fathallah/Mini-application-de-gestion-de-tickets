@@ -1,3 +1,8 @@
+<div *ngIf="successMessage" class="notification-toast">
+  <span class="icon">✅</span>
+  {{ successMessage }}
+</div>
+
 <div class="container">
   <h2>📋 Liste des Demandes</h2>
   <button routerLink="/ajouter" class="btn-add">+ Nouvelle Demande</button>
@@ -36,6 +41,9 @@
           </button>
           <button [routerLink]="['/edit', d.id]" class="btn-details">
             <span class="eye-icon">✏️</span>
+          </button>
+          <button (click)="onDelete(d.id, d.titre)" class="btn-action btn-delete" title="Supprimer">
+            <span>🗑️</span>
           </button>
         </td>
       </tr>
