@@ -1,0 +1,25 @@
+<div class="container">
+  <h2>📜 Journal d'activité global</h2>
+  <p class="subtitle">Historique complet de toutes les actions système</p>
+
+  <table class="audit-table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Utilisateur</th>
+        <th>Action</th>
+        <th>Ticket concerné</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of logs">
+        <td>{{ log.dateAction | date:'short' }}</td>
+        <td><strong>{{ log.utilisateur }}</strong></td>
+        <td><span [ngClass]="getActionClass(log.typeAction)">{{ log.typeAction }}</span></td>
+        <td>{{ log.demande?.titre || 'Ticket supprimé' }}</td>
+        <td>{{ log.details }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,25 @@
+<div class="container" *ngIf="demande">
+  <h2>Ticket #{{ demande.id.substring(0,8) }}</h2>
+  
+  <div class="info-section">
+    <p><strong>Titre :</strong> {{ demande.titre }}</p>
+    <p><strong>Statut :</strong> <span class="badge">{{ demande.statut }}</span></p>
+    <p><strong>Description :</strong><br> {{ demande.description }}</p>
+  </div>
+
+  <hr>
+
+  <h3>📜 Historique des actions</h3>
+  <ul class="timeline">
+  <li class="timeline-item" *ngFor="let h of demande.historiques">
+    <span class="timeline-date">{{ h.dateAction | date:'medium' }}</span>
+    <div class="timeline-content" style="white-space: pre-wrap;">
+      <strong>{{ h.typeAction }}</strong> : {{ h.details }}
+      <br>
+      <small>Par : {{ h.utilisateur }}</small>
+    </div>
+  </li>
+</ul>
+  
+  <button class="btn-back" routerLink="/demandes">← Retour à la liste</button>
+</div>

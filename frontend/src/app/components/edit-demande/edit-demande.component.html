@@ -1,0 +1,20 @@
+<div class="container" *ngIf="editForm">
+  <h2>✏️ Modifier la demande</h2>
+
+  <form [formGroup]="editForm" (ngSubmit)="onUpdateInfo()">
+    <div class="form-group">
+      <label>Titre</label>
+      <input formControlName="titre">
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <textarea formControlName="description"></textarea>
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn-save" [disabled]="editForm.invalid">Enregistrer les modifications</button>
+      <button type="button" class="btn-cancel" routerLink="/demandes">Annuler</button>
+    </div>
+  </form>
+</div>

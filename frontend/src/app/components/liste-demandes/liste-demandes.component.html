@@ -1,0 +1,49 @@
+<div class="container">
+  <h2>📋 Liste des Demandes</h2>
+  <button routerLink="/ajouter" class="btn-add">+ Nouvelle Demande</button>
+  <button routerLink="/journal" class="btn-audit">Journal d'Audit</button>
+    <div class="filter-group">
+        <label for="statusFilter">Filtrer par : </label>
+        <select 
+          id="statusFilter" 
+          [(ngModel)]="selectedStatus" 
+          (change)="onFilterChange()"
+          class="status-select">
+          <option value="">Tous les statuts</option>
+          <option value="Brouillon">Brouillon</option>
+          <option value="Soumise">Soumise</option>
+          <option value="Validée">Validée</option>
+        </select>
+    </div>
+  
+  <table>
+    <thead>
+      <tr>
+        <th>Titre</th>
+        <th>Statut</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let d of demandes">
+        <td>{{ d.titre }}</td>
+        <td><span class="badge">{{ d.statut }}</span></td>
+        <td>{{ d.createdAt | date:'short' }}</td>
+        <td>
+          <button [routerLink]="['/details', d.id]" class="btn-details">
+            <span class="eye-icon">👁</span>
+          </button>
+          <button [routerLink]="['/edit', d.id]" class="btn-details">
+            <span class="eye-icon">✏️</span>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="demandes.length === 0">
+      <td colspan="4" style="text-align: center; padding: 20px; color: #666;">
+        Aucune demande trouvée !!
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,91 @@
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+  color: #1e293b;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 15px;
+}
+
+.audit-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem; 
+}
+
+.audit-table th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  padding: 12px 15px;
+  border-bottom: 2px solid #e2e8f0;
+  text-align: left;
+}
+
+.audit-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f5f9;
+  vertical-align: middle;
+  white-space: pre-wrap;
+}
+
+.audit-table tbody tr:hover {
+  background-color: #fdfdfd;
+}
+
+.text-success {
+  color: #166534;
+  background: #dcfce7;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.text-danger {
+  color: #991b1b;
+  background: #fee2e2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+.text-primary {
+  color: #1e40af;
+  background: #dbeafe;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.75rem;
+}
+
+em {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+td:first-child {
+  font-family: 'Courier New', Courier, monospace;
+  color: #64748b;
+  white-space: nowrap;
+}
