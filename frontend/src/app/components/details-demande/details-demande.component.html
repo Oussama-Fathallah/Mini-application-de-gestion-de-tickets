@@ -1,5 +1,7 @@
-<div *ngIf="successMessage" class="notification-toast">
-  <span class="icon">✅</span>
+<div *ngIf="successMessage" 
+     class="notification-toast" 
+     [class.info]="isInfoMessage">
+  <span class="icon">{{ isInfoMessage ? 'ℹ️' : '✅' }}</span>
   {{ successMessage }}
 </div>
 

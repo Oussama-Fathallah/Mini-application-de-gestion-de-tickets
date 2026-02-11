@@ -179,7 +179,7 @@ h3 {
   position: fixed;
   top: 20px;
   right: 20px;
-  background-color: #10b981;
+  background-color: #10b981; /* Vert par défaut */
   color: white;
   padding: 15px 25px;
   border-radius: 8px;
@@ -192,17 +192,17 @@ h3 {
   animation: slideIn 0.3s ease-out;
 }
 
+/* Version Bleue pour l'Info */
+.notification-toast.info {
+  background-color: #3b82f6; /* Bleu (style Tailwind primary) */
+  border-left: 4px solid #1d4ed8;
+}
+
 .notification-toast .icon {
   font-size: 1.2rem;
 }
 
 @keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }

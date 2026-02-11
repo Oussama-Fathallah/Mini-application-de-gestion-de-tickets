@@ -15,6 +15,7 @@ export class EditDemandeComponent {
 
   editForm: FormGroup;
   demandeId: string = '';
+  demandeInitiale: any;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +32,7 @@ export class EditDemandeComponent {
   ngOnInit(): void {
     this.demandeId = this.route.snapshot.paramMap.get('id')!;
     this.demandeService.getDemandeById(this.demandeId).subscribe(demande => {
+      this.demandeInitiale = demande;
       this.editForm.patchValue({
         titre: demande.titre,
         description: demande.description
@@ -40,8 +42,18 @@ export class EditDemandeComponent {
 
   onUpdateInfo(): void {
     if (this.editForm.valid) {
-      this.demandeService.updateDemande(this.demandeId, this.editForm.value).subscribe({
-        next: () => {this.router.navigate(['/details', this.demandeId], { queryParams: { success: 'true' } });},
+      const formValues = this.editForm.value;
+      const aChange = formValues.titre !== this.demandeInitiale.titre || 
+                      formValues.description !== this.demandeInitiale.description;
+
+      if (!aChange) {
+        this.router.navigate(['/details', this.demandeId], { queryParams: { info: 'true' } });
+        return; 
+      }
+      this.demandeService.updateDemande(this.demandeId, formValues).subscribe({
+        next: () => {
+          this.router.navigate(['/details', this.demandeId], { queryParams: { success: 'true' } });
+        },
         error: (err) => alert(err.error.message || 'Erreur de mise à jour')
       });
     }
