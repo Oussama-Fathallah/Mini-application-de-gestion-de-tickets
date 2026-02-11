@@ -1,4 +1,10 @@
+<div *ngIf="successMessage" class="notification-toast">
+  <span class="icon">✅</span>
+  {{ successMessage }}
+</div>
+
 <div class="container" *ngIf="demande">
+  <span class="btn-back" routerLink="/demandes">←</span>
   <h2>Ticket #{{ demande.id.substring(0,8) }}</h2>
   
   <div class="info-section">
@@ -6,6 +12,27 @@
     <p><strong>Statut :</strong> <span class="badge">{{ demande.statut }}</span></p>
     <p><strong>Description :</strong><br> {{ demande.description }}</p>
   </div>
+
+  <div class="status-workflow-bar" *ngIf="demande">
+  <h3>Actions disponibles :</h3>
+  <div class="button-group">
+    <button *ngIf="demande.statut === 'Brouillon'" 
+            (click)="changeStatus('Soumise')" 
+            class="btn-workflow btn-submit">
+      Soumettre la demande
+    </button>
+
+    <button *ngIf="demande.statut === 'Soumise'" 
+            (click)="changeStatus('Validée')" 
+            class="btn-workflow btn-validate">
+      Valider la demande
+    </button>
+    
+    <span *ngIf="demande.statut === 'Validée'" class="final-status">
+      Cette demande est clôturée.
+    </span>
+  </div>
+</div>
 
   <hr>
 
@@ -21,5 +48,5 @@
   </li>
 </ul>
   
-  <button class="btn-back" routerLink="/demandes">← Retour à la liste</button>
+  
 </div>

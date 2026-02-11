@@ -54,6 +54,18 @@ td { max-width: 100px;min-width: 100px; padding: 12px; border-bottom: 1px solid 
   color: #007bff;
 }
 
+.btn-delete {
+  background-color: #ffffff;
+   
+  border: none;
+}
+
+.btn-delete:hover {
+  color: #ef4444;
+  transform: scale(1.1);
+}
+
+
 .toolbar {
   display: flex;
   justify-content: space-between;
@@ -77,4 +89,36 @@ td { max-width: 100px;min-width: 100px; padding: 12px; border-bottom: 1px solid 
   font-weight: 600;
   margin-right: 8px;
   color: var(--secondary);
+}
+
+.notification-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #10b981;
+  color: white;
+  padding: 15px 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  font-weight: 500;
+  animation: slideIn 0.3s ease-out;
+}
+
+.notification-toast .icon {
+  font-size: 1.2rem;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

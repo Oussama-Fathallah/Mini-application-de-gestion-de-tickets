@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DemandeService } from '../../services/demande.service';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit-demande',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,RouterLink],
   templateUrl: './edit-demande.component.html',
   styleUrl: './edit-demande.component.css'
 })
@@ -41,7 +41,7 @@ export class EditDemandeComponent {
   onUpdateInfo(): void {
     if (this.editForm.valid) {
       this.demandeService.updateDemande(this.demandeId, this.editForm.value).subscribe({
-        next: () => this.router.navigate(['/details', this.demandeId]),
+        next: () => {this.router.navigate(['/details', this.demandeId], { queryParams: { success: 'true' } });},
         error: (err) => alert(err.error.message || 'Erreur de mise à jour')
       });
     }
