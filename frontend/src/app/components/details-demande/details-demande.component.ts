@@ -14,6 +14,7 @@ export class DetailsDemandeComponent {
 demande?: Demande;
 successMessage: string | null = null;
   demandeId: string | null = null;
+  isInfoMessage: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,7 +25,11 @@ ngOnInit(): void {
 
   this.route.queryParams.subscribe(params => {
     if (params['success']) {
+      this.isInfoMessage = false;
       this.showNotification('Demande modifiée avec succès !');
+    } else if (params['info']) {
+      this.isInfoMessage = true;
+      this.showNotification('Aucune modification détectée.');
     }
   });
     this.demandeId = this.route.snapshot.paramMap.get('id');
@@ -43,6 +48,7 @@ loadDemande(): void {
     if (this.demande) {
       this.demandeService.updateStatus(this.demande.id, nouveauStatut).subscribe({
         next: () => {
+          this.isInfoMessage = false;
           this.showNotification(`Statut mis à jour : ${nouveauStatut}`);
           this.loadDemande();
         },

@@ -30,7 +30,7 @@ export class AjoutDemandeComponent {
     if (this.demandeForm.valid) {
       this.demandeService.createDemande(this.demandeForm.value).subscribe({
         next: () => {this.router.navigate(['/demandes'], { queryParams: { success: 'true' } });},
-        error: (err) => alert('Erreur lors de la création')
+        error: (err) => alert('Remplissez correctement le formulaire')
       });
     }
   }
